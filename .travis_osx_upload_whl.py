@@ -41,6 +41,24 @@ else:
     if '--no-config' not in sys.argv:
         write_config()
 
+# There should be exactly one .whl
+filenames = glob.glob('dist/*.whl')
+
+print('Calling transfer.sh to upload...')
+try:
+    for filename in filenames:
+        cmd = ['curl', '--upload-file', filename, 'https://transfer.sh/' + os.path.basename(filename)]
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = process.communicate()
+        out = out.decode()
+        print(out)
+        id = out.split('/')[3]
+        # redirector to keep filename, as transfer.sh replaces underscores with dashes
+        print('https://sparber.net/r/%s/%s' % (id, os.path.basename(filename)))
+except Exception as e:
+    print('error uploading to transfer.sh: %s' % str(e))
+
+
 # if --no-git we do not check with git if an upload is needed.
 do_git_check = '--no-git' not in sys.argv
 if do_git_check:
@@ -49,9 +67,6 @@ if do_git_check:
     if b'UPLOAD' not in commit:
         print('Not uploading')
         sys.exit(0)
-
-# There should be exactly one .whl
-filenames = glob.glob('dist/*.whl')
 
 
 print('Calling twine to upload...')

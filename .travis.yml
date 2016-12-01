@@ -52,17 +52,93 @@ matrix:
     #   cache:
     #     directories:
     #       - $HOME/.cache/pip
+#    - os: osx
+#      osx_image: xcode6.1
+#      language: generic
+#      env:
+#        - PY_VERSION=3
+#        - INSTALL_TYPE="homebrew"
+#        - MAKEFLAGS=-j8
+#        - BUILD_OSX_ARCH="-arch x86_64"
+#    - os: osx
+#      osx_image: xcode6.1
+#      language: generic
+#      env:
+#        - PY_VERSION=2
+#        - INSTALL_TYPE="homebrew"
+#        - MAKEFLAGS=-j8
+#        - BUILD_OSX_ARCH="-arch x86_64"
+#    - os: osx
+#      osx_image: xcode6.1
+#      language: generic
+#      env:
+#        - PY_VERSION=2
+#        - INSTALL_TYPE="system"
+#        - MAKEFLAGS=-j8
+#        - BUILD_OSX_ARCH="-arch x86_64"
     - os: osx
       language: generic
       env:
         - PY_VERSION=3
+        - INSTALL_TYPE="macpython"
         - MAKEFLAGS=-j8
+        - BUILD_OSX_ARCH="-arch x86_64"
+        - MACOSX_DEPLOYMENT_TARGET=10.9
     - os: osx
       language: generic
       env:
         - PY_VERSION=2
+        - INSTALL_TYPE="macpython"
         - MAKEFLAGS=-j8
-        # - MACOSX_DEPLOYMENT_TARGET=10.6
+        - BUILD_OSX_ARCH="-arch x86_64"
+        - MACOSX_DEPLOYMENT_TARGET=10.9
+    - os: osx
+      language: generic
+      osx_image: xcode6.4
+      env:
+        - PY_VERSION=3
+        - INSTALL_TYPE="macpython"
+        - MAKEFLAGS=-j8
+        - BUILD_OSX_ARCH="-arch x86_64"
+        - MACOSX_DEPLOYMENT_TARGET=10.9
+    - os: osx
+      language: generic
+      osx_image: xcode6.4
+      env:
+        - PY_VERSION=2
+        - INSTALL_TYPE="macpython"
+        - MAKEFLAGS=-j8
+        - BUILD_OSX_ARCH="-arch x86_64"
+        - MACOSX_DEPLOYMENT_TARGET=10.9
+    - os: osx
+      language: generic
+      osx_image: beta-xcode6.1
+      env:
+        - PY_VERSION=3
+        - INSTALL_TYPE="macpython"
+        - MAKEFLAGS=-j8
+        - BUILD_OSX_ARCH="-arch x86_64"
+    - os: osx
+      language: generic
+      osx_image: beta-xcode6.1
+      env:
+        - PY_VERSION=2
+        - INSTALL_TYPE="macpython"
+        - MAKEFLAGS=-j8
+        - BUILD_OSX_ARCH="-arch x86_64"
+    #- os: osx
+#      language: generic
+#      env:
+#        - PY_VERSION=3
+#        - MAKEFLAGS=-j8
+#        - BUILD_OSX_ARCH="-arch i386 -arch x86_64"
+#    - os: osx
+#      language: generic
+#      env:
+#        - PY_VERSION=2
+#        - MAKEFLAGS=-j8
+#        - BUILD_OSX_ARCH="-arch i386 -arch x86_64"
+#        # - MACOSX_DEPLOYMENT_TARGET=10.6
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source .travis_osx_before_install.sh;  fi
@@ -86,9 +162,7 @@ env:
     - secure: "VSoeDwpTooSW8K+n2e+nhQOQGQT7PX9GVBF9SmADUIg0Gr5pR2MTlzyGms57tBIYqFndiuLhOXi5zkH2uhMW0mq2VEDRjY4EP12coMWOnwZsdF8Qoj8x39YPR6QSS28Op6g/DLT5DszchwBlpSXHUJEL0/2iw/5A4OnIF5tMcutpkzq+wX3B+WaTqUi9yffto9/LL9/PEUbED50U94ffguwpIMVBUoxvTNhHO1PJmJKGtP1D9PROapQTp+BjzRMfFwe+9WaYPTr2iG5XZ5cNewyQrPcFGdjXOlEGgS3xxIl25l/jHgUHNZKIOKka1h4gajPxNstjnrMkMNaKnGdFo/GwkqnD2igiVT+0oLekIJ0dkVmOecuJJWUVmwCj9xZc//wW1Xunua9zGXjOeSliArnFFoyq3Md1ktOcTOoaKlWM3+0rgNA/2miYzfyMWGuFUACiQ8+fA98j0I7BcLiiUKa1/pD1fLHUcKknrnSA/hPwRBnlmDGtM2FCZobi3jIltZnadkviCpLjSObq7fE59w/+K0fxZn4GKs/xpEtss7xXxs0CmyJwZ6WVxlZAObfUPiRIdj+tglnB31ZdTNWe+7cC9f8zaQYs8+iaiM6DWehOI1o80RcIAuiU10sba89gqSkn+eOfPvzwg4d/z/XJW05weEL18s4ZvYp+JuqhN2Y="
     - secure: "EGrZt/2EGOAzwcI69la5RgJ1Fr8uXM0TYarCheBrDVwcESNXccH9myyflN97m/jDrdyJB2fmVgI2WDpFdvnpEXNC7+lTEhApgFx6L1TwE/s5Fj6Kd72cERcPmDwLwzQFChXl2kjPTgu/Qr2u2X3EYCfEd0jRf+TcdHasvOLeGuQu7l0cnyW6WK+xMhF1wV8O9F1IdggyeysYIpP/v8rCtmjd268AqploBJ3cM3qau1F9NYBCSUPhu9eZfB0JRhHzeFDbNxRJtG+WZjk2CuGi1W8BGM/CeJkM/3b7iHMEwCYd8JW4k8ZYLSrPUiHkKxSeL9R12+p9u6AHMlXfEfO96Nt8pQkhVP9BxH374RRvQsIl5OxACTAW9XEiqTP7aRXIBSOxX6p3DxUXl6Ogn0d9U5rIu4SUAiaWW9e0k+Oeo/H3OGuerFlBIh6rW4kzVZ7ftcqzVRz9QgnrSy2r93BYzTWwM3eifkFQwtgnBSvXxM151leHOJ9r3PAiRup7V90WZBD4zytQSMaOc+fcdIWscP88sPcLXZEb6n6y7Ja3t5ASO58dXLw9EvqS4CsRYI08ltH85L/cq37dKgpvu33lsx1ZDksiMKtZW7tXhV1DZ9thl1JH/3f9QLRFz+02mJ6FD4PCJRYQvDDs5J4j7rf76FUlcBr+9bAN0sRnPL6UOms="
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $PYTHON_EXE -m pygame.tests.__main__ --exclude opengl --time_out 300 > /dev/null 2> /dev/null; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then $(set | grep PYPI_ | python -c "import sys;print('\n'.join(['unset %s' % l.split('=')[0] for l in sys.stdin.readlines() if l.startswith('PYPI')]))"); fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then $PYTHON_EXE -m pygame.tests.__main__ --exclude opengl --time_out 300; fi
+  - $PYTHON_EXE -m pygame.tests.__main__ --exclude opengl --time_out 300
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source .travis_osx_after_success.sh; fi

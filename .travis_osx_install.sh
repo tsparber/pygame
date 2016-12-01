@@ -12,4 +12,4 @@ sed 's/-I\/usr\/X11R6\/include //g' Setup > Setup.new
 mv Setup.new Setup
 
 # Makes for i386 and x86_64.
-CXXFLAGS="-arch i386 -arch x86_64" CFLAGS="-arch i386 -arch x86_64" LDFLAGS="-arch i386 -arch x86_64" $PYTHON_EXE setup.py install -noheaders
+CXXFLAGS="${BUILD_OSX_ARCH}" CFLAGS="${BUILD_OSX_ARCH}" LDFLAGS="${BUILD_OSX_ARCH}" $PYTHON_EXE setup.py install -noheaders
